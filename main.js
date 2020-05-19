@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const readItem = require('./readItem');
+const updater = require('./updater');
 
 let mainWindow;
 
@@ -14,6 +15,9 @@ ipcMain.on('new-item', (e, itemUrl) => {
 });
 
 let createWindow = () => {
+  // check for app updates 3 seconds after launch
+  setTimeout(updater, 3000);
+
   // win state keeper
   let state = windowStateKeeper({
     defaultWidth: 500,

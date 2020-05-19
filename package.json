@@ -1,6 +1,6 @@
 {
 	"name": "Bookmarker",
-	"version": "1.0.0",
+	"version": "0.9.0",
 	"description": "A simple bookmarker app (first electron app!)",
 	"main": "main.js",
 	"scripts": {
@@ -23,6 +23,8 @@
 		"nodemon": "^2.0.4"
 	},
 	"dependencies": {
+		"electron-log": "^4.1.2",
+		"electron-updater": "^4.3.1",
 		"electron-window-state": "^5.0.3"
 	},
 	"build": {
