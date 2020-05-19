@@ -2,7 +2,8 @@ const { app, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 // configure log debugging
-autoUpdater.logger = require('electron-log');
+const log = require('electron-log');
+autoUpdater.logger = log;
 autoUpdater.logger.transports.file.level = 'info';
 
 // disable auto downloading of updates
@@ -16,48 +17,45 @@ module.exports = () => {
 	// listen for update found
 	autoUpdater.on('update-available', () => {
 		// prompt user to start download
-		dialog.showMessageBox(
-			{
+		dialog
+			.showMessageBox({
 				type: 'info',
 				title: 'Update available',
 				message:
 					'A new version of Bookmarker is available. Do you want to update now?',
 				buttons: ['Update', 'No']
-			},
-			buttonIndex => {
+			})
+			.then(result => {
 				// if buttonIndex is 0 (Update), start downloading the update
-				if (buttonIndex === 0) {
-					setImmediate(() => {
-						// autoUpdater.downloadUpdate();
-						autoUpdater
-							.downloadUpdate()
-							.then(path => console.log(path))
-							.catch(err => console.log(err));
-					});
+				if (result.response === 0) {
+					autoUpdater.downloadUpdate();
 				}
-			}
-		);
+			})
+			.catch(err => {
+				console.log(err);
+				log.error(err);
+			});
 	});
 
 	// listen for update downloaded
 	autoUpdater.on('update-downloaded', () => {
 		// prompt user to install update
-		dialog.showMessageBox(
-			{
+		dialog
+			.showMessageBox({
 				type: 'info',
 				title: 'Update ready',
 				message: 'Install and restart now?',
 				buttons: ['Yes', 'Later']
-			},
-			buttonIndex => {
+			})
+			.then(result => {
 				// install and restart if button 0 (Yes)
-				if (buttonIndex === 0) {
-					setImmediate(() => {
-						// app.removeAllListeners('window-all-closed');
-						autoUpdater.quitAndInstall(false, true);
-					});
+				if (result.response === 0) {
+					autoUpdater.quitAndInstall(false, true);
 				}
-			}
-		);
+			})
+			.catch(err => {
+				console.log(err);
+				log.error(err);
+			});
 	});
 };
