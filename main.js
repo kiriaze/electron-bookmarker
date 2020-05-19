@@ -1,12 +1,34 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
+const windowStateKeeper = require('electron-window-state');
+const readItem = require('./readItem');
 
 let mainWindow;
 
+// listen for new item request
+ipcMain.on('new-item', (e, itemUrl) => {
+  // console.log(itemUrl);
+  // get new item and send it back to the renderer
+  readItem(itemUrl, item => {
+    e.sender.send('new-item-success', item);
+  });
+});
+
 let createWindow = () => {
+  // win state keeper
+  let state = windowStateKeeper({
+    defaultWidth: 500,
+    defaultHeight: 650
+  });
+
   //
   mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 800,
+    x: state.x,
+    y: state.y,
+    width: state.width,
+    height: state.height,
+    minWidth: 350,
+    maxWidth: 650,
+    minHeight: 300,
     webPreferences: {
       nodeIntegration: true
     }
@@ -16,7 +38,11 @@ let createWindow = () => {
 
   mainWindow.loadFile('./renderer/main.html');
 
-  wc.openDevTools();
+  // manage new window state
+  state.manage(mainWindow);
+
+  // // dev mode only
+  // wc.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
