@@ -9,6 +9,8 @@
 		"reset": "git reset --hard",
 		"build": "electron-builder -m zip"
 	},
+	"repository": "https://github.com/kiriaze/electron-bookmarker",
+	"homepage": "https://github.com/kiriaze/electron-bookmarker",
 	"author": "Constantine Kiriaze",
 	"license": "ISC",
 	"devDependencies": {
