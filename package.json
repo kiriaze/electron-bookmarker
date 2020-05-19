@@ -7,7 +7,10 @@
 		"start": "electron .",
 		"watch": "nodemon --exec 'electron .'",
 		"reset": "git reset --hard",
-		"build": "electron-builder -m zip"
+		"build": "electron-builder -m",
+		"build-win": "electron-builder -w",
+		"build-linux": "electron-builder -l",
+		"build-all": "electron-builder -mwl"
 	},
 	"repository": "https://github.com/kiriaze/electron-bookmarker",
 	"homepage": "https://github.com/kiriaze/electron-bookmarker",
@@ -20,5 +23,23 @@
 	},
 	"dependencies": {
 		"electron-window-state": "^5.0.3"
+	},
+	"build": {
+		"appId": "com.kiriaze.bookmarker",
+		"copyright": "Copyright 2020 Kiriaze.com",
+		"mac": {
+			"category": "public.app-category.productivity",
+			"target": "dmg"
+		},
+		"win": {
+			"target": "zip",
+			"certificateFile": "private/kiriaze.p12",
+			"certificatePassword": "",
+			"verifyUpdateCodeSignature": false,
+			"publisherName": "kiriaze"
+		},
+		"linux": {
+			"category": "Utility"
+		}
 	}
 }
