@@ -8,6 +8,7 @@
 		"watch": "nodemon --exec 'electron .'",
 		"reset": "git reset --hard",
 		"build": "electron-builder -m",
+		"release": "electron-builder -m -p 'onTagOrDraft'",
 		"build-win": "electron-builder -w",
 		"build-linux": "electron-builder -l",
 		"build-all": "electron-builder -mwl"
@@ -27,9 +28,11 @@
 	"build": {
 		"appId": "com.kiriaze.bookmarker",
 		"copyright": "Copyright 2020 Kiriaze.com",
+		"publish": {
+			"provider": "github"
+		},
 		"mac": {
-			"category": "public.app-category.productivity",
-			"target": "dmg"
+			"category": "public.app-category.productivity"
 		},
 		"win": {
 			"target": "zip",
