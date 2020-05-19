@@ -1,4 +1,4 @@
-const { dialog } = require('electron');
+const { app, dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 // configure log debugging
@@ -26,7 +26,15 @@ module.exports = () => {
 			},
 			buttonIndex => {
 				// if buttonIndex is 0 (Update), start downloading the update
-				if (buttonIndex === 0) autoUpdater.downloadUpdate();
+				if (buttonIndex === 0) {
+					setImmediate(() => {
+						// autoUpdater.downloadUpdate();
+						autoUpdater
+							.downloadUpdate()
+							.then(path => console.log(path))
+							.catch(err => console.log(err));
+					});
+				}
 			}
 		);
 	});
@@ -43,7 +51,12 @@ module.exports = () => {
 			},
 			buttonIndex => {
 				// install and restart if button 0 (Yes)
-				if (buttonIndex === 0) autoUpdater.quitAndInstall(false, true);
+				if (buttonIndex === 0) {
+					setImmediate(() => {
+						// app.removeAllListeners('window-all-closed');
+						autoUpdater.quitAndInstall(false, true);
+					});
+				}
 			}
 		);
 	});
