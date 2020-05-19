@@ -1,6 +1,6 @@
 {
 	"name": "Bookmarker",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "A simple bookmarker app (first electron app!)",
 	"main": "main.js",
 	"scripts": {
@@ -8,7 +8,7 @@
 		"watch": "nodemon --exec 'electron .'",
 		"reset": "git reset --hard",
 		"build": "electron-builder -m",
-		"release": "electron-builder -m -p 'onTagOrDraft'",
+		"release": "electron-builder -mwl -p 'onTagOrDraft'",
 		"build-win": "electron-builder -w",
 		"build-linux": "electron-builder -l",
 		"build-all": "electron-builder -mwl"
