@@ -4,14 +4,12 @@
 	"description": "A simple bookmarker app (first electron app!)",
 	"main": "main.js",
 	"scripts": {
-		"start": "electron .",
-		"watch": "nodemon --exec 'electron .'",
 		"reset": "git reset --hard",
-		"build": "electron-builder -m",
-		"release": "electron-builder -mwl -p 'onTagOrDraft'",
-		"build-win": "electron-builder -w",
-		"build-linux": "electron-builder -l",
-		"build-all": "electron-builder -mwl"
+		"start": "npm run build-css && electron .",
+		"watch": "nodemon -e scss -x \"npm run build-css && electron .\"",
+		"build": "npm run build-css && electron-builder -mwl",
+		"build-css": "node-sass --include-path scss renderer/main.scss renderer/main.css",
+		"release": "npm run build-css && electron-builder -mwl -p 'onTagOrDraft'"
 	},
 	"repository": "https://github.com/kiriaze/electron-bookmarker",
 	"homepage": "https://github.com/kiriaze/electron-bookmarker",
@@ -25,7 +23,8 @@
 	"dependencies": {
 		"electron-log": "^4.1.2",
 		"electron-updater": "^4.3.1",
-		"electron-window-state": "^5.0.3"
+		"electron-window-state": "^5.0.3",
+		"node-sass": "^4.14.1"
 	},
 	"build": {
 		"appId": "com.kiriaze.bookmarker",

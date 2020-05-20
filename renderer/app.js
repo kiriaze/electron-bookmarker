@@ -32,9 +32,9 @@ window.searchItems = () => {
 };
 
 // filter items with search
-search.addEventListener('keyup', e => {
+search.addEventListener('keyup', (e) => {
 	// iterate over items
-	[...document.querySelectorAll('.read-item')].map(item => {
+	[...document.querySelectorAll('.read-item')].map((item) => {
 		// hide items that dont match value
 		let hasMatch = item.innerText.toLowerCase().includes(search.value);
 		item.style.display = hasMatch ? 'flex' : 'none';
@@ -42,7 +42,7 @@ search.addEventListener('keyup', e => {
 });
 
 // navigate item selection with up/down arrows
-document.addEventListener('keydown', e => {
+document.addEventListener('keydown', (e) => {
 	if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
 		items.changeSelection(e.key);
 	}
@@ -70,19 +70,19 @@ const toggleModalButtons = () => {
 };
 
 // Show modal
-showModal.addEventListener('click', e => {
+showModal.addEventListener('click', (e) => {
 	modal.style.display = 'flex';
 	// focus input
 	itemUrl.focus();
 });
 
 // Hide modal
-closeModal.addEventListener('click', e => {
+closeModal.addEventListener('click', (e) => {
 	modal.style.display = 'none';
 });
 
 // Handle new item
-addItem.addEventListener('click', e => {
+addItem.addEventListener('click', (e) => {
 	// check if url exists
 	if (itemUrl.value) {
 		// console.log(itemUrl.value);
@@ -108,6 +108,6 @@ ipcRenderer.on('new-item-success', (e, newItem) => {
 });
 
 // Handle new item via keys
-itemUrl.addEventListener('keyup', e => {
+itemUrl.addEventListener('keyup', (e) => {
 	if (e.key === 'Enter') addItem.click();
 });

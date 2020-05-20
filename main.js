@@ -9,7 +9,7 @@ let mainWindow;
 ipcMain.on('new-item', (e, itemUrl) => {
   // console.log(itemUrl);
   // get new item and send it back to the renderer
-  readItem(itemUrl, item => {
+  readItem(itemUrl, (item) => {
     e.sender.send('new-item-success', item);
   });
 });
@@ -21,7 +21,7 @@ let createWindow = () => {
   // win state keeper
   let state = windowStateKeeper({
     defaultWidth: 500,
-    defaultHeight: 650
+    defaultHeight: 650,
   });
 
   //
@@ -34,8 +34,8 @@ let createWindow = () => {
     maxWidth: 650,
     minHeight: 300,
     webPreferences: {
-      nodeIntegration: true
-    }
+      nodeIntegration: true,
+    },
   });
 
   let wc = mainWindow.webContents;
